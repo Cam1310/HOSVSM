@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Veterinario Santa Martha</title>
+  
+  <link rel="icon" href="https://i.ibb.co/xSZ1Q0cC/favicon.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
+  <style>
+    /* Custom styles for hero section fade transition */
+    .hero-bg-image {
+        transition: opacity 1.5s ease-in-out;
+    }
+    body {
+        font-family: 'Montserrat', sans-serif;
+    }
+    /* Logo adjustments */
+    .header-logo {
+        height: 64px; 
+        width: auto;
+        object-fit: contain;
+    }
+    .footer-logo {
+        height: 110px; 
+        width: auto;
+        object-fit: contain;
+    }
+    /* Team member hover effect (CSS) */
+    .team-member-card .overlay {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .team-member-card:hover .overlay {
+      opacity: 1;
+    }
+    
+    /* --- Styles for Floating Buttons --- */
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+    .floating-widget {
+        position: fixed;
+        bottom: 20px;
+        z-index: 40;
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+    .floating-widget.visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+    
+    /* WhatsApp Button Styles - Increased Size */
+    #whatsapp-widget { right: 20px; }
+    #whatsapp-button {
+        width: 64px;
+        height: 64px;
+        background-color: #25D366;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        animation: bounce 2s infinite ease-in-out;
+        font-size: 2rem; /* Increased icon size */
+    }
+    #whatsapp-tooltip {
+        position: absolute;
+        bottom: 12px;
+        right: 80px;
+        background-color: #140c3c;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        white-space: nowrap;
+        font-size: 0.9rem;
+        opacity: 0;
+        transform: translateX(10px);
+        transition: opacity 0.3s, transform 0.3s;
+        pointer-events: none;
+    }
+    #whatsapp-widget:hover #whatsapp-tooltip {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    #whatsapp-popup {
+        position: absolute;
+        bottom: 85px;
+        right: 0;
+        width: 280px;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.3s, transform 0.3s;
+        pointer-events: none;
+    }
+    #whatsapp-widget.active #whatsapp-popup {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+    
+    /* Scroll to Top Button Styles - Increased Size */
+    #scroll-to-top-button {
+      left: 20px;
+      width: 56px;
+      height: 56px;
+      background-color: #f4d434;
+      color: #140c3c;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      font-size: 1.5rem; /* Increased icon size */
+    }
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- Header -->
+  <header id="header" class="bg-[#140c3c] text-white sticky top-0 z-50 shadow-lg">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center py-2">
+        <a href="#inicio" class="flex items-center">
+          <img src="https://i.postimg.cc/BQtcz1Tz/20251018-200027-0000.png" alt="Hospital Veterinario Santa Martha" class="header-logo" />
+        </a>
+        
+        <nav class="hidden md:flex space-x-6" id="desktop-nav">
+        </nav>
+
+        <div class="hidden md:flex space-x-4" id="desktop-social">
+        </div>
+
+        <button class="md:hidden" id="menu-button">
+          <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+          <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 hidden"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <nav class="md:hidden py-4 border-t border-[#f4d434]/20 hidden" id="mobile-menu">
+        <div class="flex flex-col space-y-4 mb-4" id="mobile-nav">
+        </div>
+        <div class="flex space-x-4 pt-4 border-t border-[#f4d434]/20" id="mobile-social">
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="inicio" class="relative h-screen flex items-center justify-center text-center py-20 overflow-hidden">
+    <div class="absolute inset-0" id="hero-bg-container">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-br from-[#140c3c]/60 to-[#2a1a5e]/60"></div>
+
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-4xl mx-auto">
+        <h2 data-aos="fade-up" class="text-4xl md:text-6xl font-bold mb-6 text-white">
+          Cuidamos de tu mejor amigo como si fuera de nuestra familia
+        </h2>
+        <p data-aos="fade-up" data-aos-delay="200" class="text-xl md:text-2xl mb-8 text-[#f4d434] font-medium">
+          Atención veterinaria especializada con amor y profesionalismo
+        </p>
+        <div data-aos="fade-up" data-aos-delay="400" class="flex justify-center">
+          <a href="#sobre-nosotros" class="nav-link border-2 border-[#f4d434] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#f4d434] hover:text-[#140c3c] transition-colors">
+            Conoce Nuestro Equipo
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2" id="hero-dots">
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section id="sobre-nosotros" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h3 data-aos="fade-up" class="text-3xl md:text-4xl font-bold text-[#140c3c] mb-4">
+          Sobre Nosotros
+        </h3>
+        <p data-aos="fade-up" data-aos-delay="200" class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Conoce nuestra historia, misión, visión y al equipo que se dedica a cuidar de tu mascota
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+        <div data-aos="fade-right" class="bg-white p-8 rounded-xl shadow-lg border-l-4 border-[#f4d434] hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+          <div class="w-16 h-16 bg-[#f4d434] rounded-full flex items-center justify-center mb-6">
+            <i class="fas fa-bullseye text-[#140c3c] text-2xl"></i>
+          </div>
+          <h4 class="text-2xl font-bold text-[#140c3c] mb-4">Nuestra Misión</h4>
+          <p class="text-gray-600 leading-relaxed">Proporcionar atención veterinaria de excelencia con compasión, integridad y profesionalismo, asegurando el bienestar integral de las mascotas y brindando tranquilidad a sus familias humanas.</p>
+        </div>
+        <div data-aos="fade-left" class="bg-white p-8 rounded-xl shadow-lg border-l-4 border-[#f4d434] hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+          <div class="w-16 h-16 bg-[#f4d434] rounded-full flex items-center justify-center mb-6">
+            <i class="fas fa-eye text-[#140c3c] text-2xl"></i>
+          </div>
+          <h4 class="text-2xl font-bold text-[#140c3c] mb-4">Nuestra Visión</h4>
+          <p class="text-gray-600 leading-relaxed">Ser el hospital veterinario de referencia en la región, reconocido por su innovación, calidad en el servicio y compromiso con la salud animal, estableciendo estándares de excelencia en medicina veterinaria.</p>
+        </div>
+      </div>
+
+      <div class="text-center mb-12">
+        <h4 data-aos="fade-up" class="text-3xl font-bold text-[#140c3c] mb-4">
+          Nuestro Equipo Veterinario
+        </h4>
+        <p data-aos="fade-up" data-aos-delay="200" class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Profesionales altamente capacitados y apasionados por el cuidado de las mascotas
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="team-grid">
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="servicios" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h3 data-aos="fade-up" class="text-3xl md:text-4xl font-bold text-[#140c3c] mb-4">
+                Nuestros Servicios
+            </h3>
+            <p data-aos="fade-up" data-aos-delay="200" class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Ofrecemos una amplia gama de servicios veterinarios para garantizar la salud y bienestar de tu mascota
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="services-grid">
+        </div>
+    </div>
+  </section>
+
+  <!-- Huellas Eternas Section -->
+  <section id="huellas-eternas" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <div data-aos="fade-up" class="bg-white rounded-2xl p-6 md:p-12 border-2 border-[#140c3c] shadow-lg">
+          <div data-aos="zoom-in" data-aos-delay="200" class="mb-8">
+            <div class="flex justify-center mb-6">
+              <img src="https://i.ibb.co/DDNyRYvF/Huellas-Eternas-20251018-175512-0000.png" alt="Huellas Eternas" class="h-48 w-auto object-contain" />
+            </div>
+            <h3 class="text-3xl md:text-4xl font-bold mb-6 text-[#140c3c]">Huellas Eternas</h3>
+          </div>
+          
+          <p data-aos="fade-up" data-aos-delay="300" class="text-xl mb-8 leading-relaxed text-gray-800">
+            Servicio de cremación de mascotas con el más alto estándar de respeto y profesionalismo.
+          </p>
+          
+          <p data-aos="fade-up" data-aos-delay="400" class="text-lg mb-8 text-gray-700 leading-relaxed">
+            <strong>Importante:</strong> Este servicio se realiza a través de nuestro hospital veterinario. 
+            Nosotros nos encargamos de todo el contacto y coordinación con el servicio de cremación, 
+            brindándote acompañamiento y soporte durante este difícil momento.
+          </p>
+          
+          <div data-aos="fade-up" data-aos-delay="500" class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-colors shadow-lg flex items-center justify-center gap-2">
+              <i class="fas fa-book"></i> Catálogo
+            </button>
+            <button class="bg-[#140c3c] hover:bg-[#0a061e] text-white px-8 py-4 rounded-full font-bold text-lg transition-colors shadow-lg flex items-center justify-center gap-2">
+              <i class="fas fa-tag"></i> Precios
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact Section -->
+  <section id="contacto" class="py-20 bg-[#140c3c] text-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <h3 data-aos="fade-up" class="text-3xl md:text-4xl font-bold mb-4">
+            Contáctanos
+          </h3>
+          <p data-aos="fade-up" data-aos-delay="200" class="text-lg text-[#f4d434]">
+            Estamos aquí para ayudarte y cuidar de tu mascota
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div class="space-y-8">
+            <div data-aos="fade-right" class="flex items-start space-x-4">
+              <i class="fas fa-phone-alt text-[#f4d434] text-xl mt-1 flex-shrink-0"></i>
+              <div>
+                <h4 class="text-xl font-semibold mb-2">Teléfono</h4>
+                <p class="text-lg">+593 963 130 108</p>
+                <p class="text-[#f4d434]">Emergencias 24/7</p>
+              </div>
+            </div>
+             <div data-aos="fade-right" data-aos-delay="100" class="flex items-start space-x-4">
+              <i class="fas fa-envelope text-[#f4d434] text-xl mt-1 flex-shrink-0"></i>
+              <div>
+                <h4 class="text-xl font-semibold mb-2">Email</h4>
+                <p class="text-lg">hosvetsantamartha@gmail.com</p>
+                <p class="text-[#f4d434]">Respuesta en menos de 24h</p>
+              </div>
+            </div>
+             <div data-aos="fade-right" data-aos-delay="200" class="flex items-start space-x-4">
+              <i class="fas fa-map-marker-alt text-[#f4d434] text-xl mt-1 flex-shrink-0"></i>
+              <div>
+                <h4 class="text-xl font-semibold mb-2">Dirección</h4>
+                <p class="text-lg">Av Jacinto Cortéz Jhayya, 184, Coop. Santa Martha Sector 3, 230106, Santo Domingo de los Tsachilas</p>
+              </div>
+            </div>
+            <div data-aos="fade-right" data-aos-delay="300" class="bg-[#f4d434]/10 p-6 rounded-lg hover:scale-102 hover:shadow-2xl hover:shadow-yellow-500/20 transition-all duration-300">
+              <h4 class="text-xl font-semibold mb-3 text-[#f4d434]">Horario de Atención</h4>
+              <p class="text-lg">Lunes a Domingo: 24 horas</p>
+              <p class="text-[#f4d434] mt-2">¡Siempre estamos para ti y tu mascota!</p>
+            </div>
+             <div data-aos="fade-right" data-aos-delay="400" class="bg-white/10 p-6 rounded-lg">
+              <h4 class="text-xl font-semibold mb-3 text-[#f4d434]">Ubicación</h4>
+              <a href="https://maps.app.goo.gl/sznibLeS7aFDmLAM9" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#f4d434] transition-colors block">
+                <i class="fas fa-external-link-alt mr-2"></i>Ver en Google Maps
+              </a>
+            </div>
+          </div>
+
+          <div data-aos="fade-left" class="bg-white/10 backdrop-blur-sm p-8 rounded-xl">
+            <form id="contact-form" class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="name" class="block text-sm font-medium mb-2">Nombre</label>
+                  <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#f4d434]" placeholder="Tu nombre" required />
+                </div>
+                <div>
+                  <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                  <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#f4d434]" placeholder="tu@email.com" required/>
+                </div>
+              </div>
+              <div>
+                <label for="phone" class="block text-sm font-medium mb-2">Teléfono</label>
+                <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#f4d434]" placeholder="+593 963 130 108" />
+              </div>
+              <div>
+                <label for="message" class="block text-sm font-medium mb-2">Mensaje</label>
+                <textarea rows="4" id="message" name="message" class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#f4d434]" placeholder="¿En qué podemos ayudarte?" required></textarea>
+              </div>
+              <button type="submit" id="submit-button" class="w-full bg-[#f4d434] text-[#140c3c] px-6 py-4 rounded-lg font-bold text-lg shadow-lg hover:bg-[#e8c52a] hover:scale-102 transition-all duration-200">
+                Enviar Mensaje
+              </button>
+              <div id="form-status" class="text-center text-white mt-4"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" class="bg-[#0a061e] text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="flex flex-col items-center md:items-start text-center md:text-left">
+          <img src="https://i.postimg.cc/Kc1DqMD2/20251018-200637-0000.png" alt="Hospital Veterinario Santa Martha" class="footer-logo mb-4" />
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Cuidando de tu mascota con amor y profesionalismo para asegurar que disfruten de una vida larga, saludable y feliz a tu lado.
+          </p>
+          <div class="flex justify-center md:justify-start space-x-4 pt-4" id="footer-social">
+          </div>
+        </div>
+        <div class="text-center md:text-left">
+          <h4 class="text-lg font-bold mb-4">Navegación</h4>
+          <ul class="space-y-2" id="footer-nav">
+          </ul>
+        </div>
+        <div class="text-center md:text-left">
+          <h4 class="text-lg font-bold mb-4">Servicios Destacados</h4>
+          <ul class="space-y-2" id="footer-services">
+          </ul>
+        </div>
+        <div class="text-center md:text-left">
+          <h4 class="text-lg font-bold mb-4">Contacto</h4>
+          <div class="space-y-3">
+            <div class="flex items-start space-x-3 justify-center md:justify-start">
+              <i class="fas fa-map-marker-alt text-[#f4d434] text-sm mt-1"></i>
+              <span class="text-gray-400 text-sm">Av Jacinto Cortéz Jhayya, 184, Coop. Santa Martha Sector 3, 230106, Santo Domingo de los Tsachilas</span>
+            </div>
+            <div class="flex items-start space-x-3 justify-center md:justify-start">
+              <i class="fas fa-phone-alt text-[#f4d434] text-sm mt-1"></i>
+              <span class="text-gray-400 text-sm">+593 963 130 108</span>
+            </div>
+            <div class="flex items-start space-x-3 justify-center md:justify-start">
+              <i class="fas fa-envelope text-[#f4d434] text-sm mt-1"></i>
+              <span class="text-gray-400 text-sm">hosvetsantamartha@gmail.com</span>
+            </div>
+            <div class="pt-2">
+              <a href="https://maps.app.goo.gl/sznibLeS7aFDmLAM9" target="_blank" rel="noopener noreferrer" class="text-[#f4d434] hover:text-white transition-colors text-sm inline-flex items-center">
+                <i class="fas fa-map mr-2"></i>Ver ubicación
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-[#f4d434]/20 mt-12 pt-8 text-center">
+        <p class="text-gray-400" id="footer-copyright">
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Action Buttons -->
+  <div id="whatsapp-widget" class="floating-widget">
+      <div id="whatsapp-tooltip">¿Necesitas Ayuda? ¡Contáctanos!</div>
+      <div id="whatsapp-popup">
+          <div class="bg-[#140c3c] text-white p-4 text-center">
+              <h4 class="font-bold">Iniciar Conversación</h4>
+              <p class="text-sm text-gray-300">¡Hola! Clica abajo.</p>
+          </div>
+          <div class="p-4 space-y-3">
+              <a href="https://wa.me/593963130108" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                  <i class="fab fa-whatsapp text-2xl text-green-500"></i>
+                  <div class="text-gray-800">
+                      <p class="font-semibold">Chatear Ahora</p>
+                      <p class="text-sm">Normalmente respondemos en minutos.</p>
+                  </div>
+              </a>
+              <a href="#contacto" class="flex items-center gap-4 p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors nav-link">
+                  <i class="fas fa-headset text-2xl text-[#140c3c]"></i>
+                  <div class="text-gray-800">
+                      <p class="font-semibold">Atención en Línea</p>
+                      <p class="text-sm">Ver otras formas de contacto.</p>
+                  </div>
+              </a>
+          </div>
+      </div>
+      <button id="whatsapp-button">
+          <i class="fab fa-whatsapp"></i>
+      </button>
+  </div>
+
+  <a href="#inicio" id="scroll-to-top-button" class="floating-widget nav-link">
+      <i class="fas fa-arrow-up"></i>
+  </a>
+
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AOS.init({
+        once: true,
+        duration: 800,
+        easing: 'ease-in-out',
+      });
+
+      const contactData = {
+        phone: "+593 963 130 108",
+        email: "hosvetsantamartha@gmail.com",
+        address: "Av Jacinto Cortéz Jhayya, 184, Coop. Santa Martha Sector 3, 230106, Santo Domingo de los Tsachilas",
+        facebook: "https://www.facebook.com/hospvetsantamartha",
+        instagram: "https://instagram.com/veterinariasantamartha",
+        whatsapp: "https://wa.me/593963130108"
+      };
+      const heroImages = [
+        "https://i.ibb.co/VW5ZWfhH/cirugia-hvsm.jpg",
+        "https://i.ibb.co/39jDHXqJ/atendimiento-clinico.jpg",
+        "https://i.ibb.co/LXB91DmF/cirurgia-veterinaria.jpg",
+        "https://i.ibb.co/V0XBwF05/imagenologia-veterinaria.jpg"
+      ];
+      const serviceImages = [
+        "https://i.ibb.co/39jDHXqJ/atendimiento-clinico.jpg",
+        "https://i.ibb.co/LXB91DmF/cirurgia-veterinaria.jpg",
+        "https://i.ibb.co/V0XBwF05/imagenologia-veterinaria.jpg",
+        "https://i.ibb.co/35Mrdvqt/emergencia-veterinaria.jpg",
+        "https://i.ibb.co/Df3FPKSG/hospitalizacion-veterinaria.jpg",
+        "https://i.ibb.co/7Jj8xSbP/estetica-canina.jpg"
+      ];
+      const teamImages = [
+        "https://placehold.co/300x300/140c3c/white?text=Doctor%2Far",
+        "https://placehold.co/300x300/2a1a5e/white?text=Doctor%2Far",
+        "https://placehold.co/300x300/140c3c/white?text=Doctor%2Far",
+        "https://placehold.co/300x300/2a1a5e/white?text=Doctor%2Far",
+        "https://placehold.co/300x300/140c3c/white?text=Doctor%2Far",
+        "https://placehold.co/300x300/2a1a5e/white?text=Doctor%2Far"
+      ];
+      const services = [
+        { title: "Atención Clínica", description: "Evaluación médica completa y diagnóstico preciso para tu mascota.", icon: "fas fa-stethoscope" },
+        { title: "Cirugía", description: "Procedimientos quirúrgicos de tejidos blandos y ortopédicos con tecnología avanzada.", icon: "fas fa-procedures" },
+        { title: "Exámenes de Imagen", description: "Rayos X, Ultrasonografía y Endoscopia para diagnósticos precisos.", icon: "fas fa-x-ray" },
+        { title: "Emergencias 24h", description: "Atención inmediata las 24 horas del día, los 365 días del año.", icon: "fas fa-ambulance" },
+        { title: "Hospitalización 24h", description: "Cuidados intensivos y monitoreo constante para pacientes hospitalizados.", icon: "fas fa-bed" },
+        { title: "Dermatología y Estética Canina", description: "Tratamientos dermatológicos y servicios de belleza para tu mascota.", icon: "fas fa-spa" }
+      ];
+      const teamMembers = [
+        { name: "Dra. María Alejandra Mero", title: "Directora Médica", specialty: "Medicina Interna, Manejo y Control de Heridas" },
+        { name: "Dr. Patricio Intriago", title: "Cirujano Veterinario y Especialista en Imagenología", specialty: "Cirugía de Tejidos Blandos y Endoscopia" },
+        { name: "Dr. Jefferson Intriago", title: "Anestesiólogo Veterinario", specialty: "Anestesiología y Cuidados Intensivos" },
+        { name: "Dra. Dyra Valencia", title: "Veterinaria de Guardia", specialty: "Medicina Interna" },
+        { name: "Dr. Álvaro Montesdeoca", title: "Auxiliar Veterinario", specialty: "Cirugia de Tejidos Blandos" },
+        { name: "Dra. Karelis Loor", title: "Veterinaria de Guardia", specialty: "Laboratorio" }
+      ];
+      const navItems = [
+        { id: 'inicio', label: 'Inicio' },
+        { id: 'sobre-nosotros', label: 'Sobre Nosotros' },
+        { id: 'servicios', label: 'Servicios' },
+        { id: 'huellas-eternas', label: 'Huellas Eternas' },
+        { id: 'contacto', label: 'Contacto' }
+      ];
+      const socialLinks = [
+        { href: contactData.facebook, icon: "fab fa-facebook-f" },
+        { href: contactData.instagram, icon: "fab fa-instagram" },
+        { href: contactData.whatsapp, icon: "fab fa-whatsapp" }
+      ];
+      
+      let isMenuOpen = false;
+      let activeSection = 'inicio';
+      let currentImageIndex = 0;
+      let heroInterval;
+
+      const header = document.getElementById('header');
+      const menuButton = document.getElementById('menu-button');
+      const menuOpenIcon = document.getElementById('menu-open-icon');
+      const menuCloseIcon = document.getElementById('menu-close-icon');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const heroBgContainer = document.getElementById('hero-bg-container');
+      const heroDotsContainer = document.getElementById('hero-dots');
+      const teamGrid = document.getElementById('team-grid');
+      const servicesGrid = document.getElementById('services-grid');
+      const whatsappWidget = document.getElementById('whatsapp-widget');
+      const whatsappButton = document.getElementById('whatsapp-button');
+      const scrollToTopButton = document.getElementById('scroll-to-top-button');
+      const footer = document.getElementById('footer');
+
+      const renderNavItems = (isMobile = false) => navItems.map(item => `<a href="#${item.id}" data-section="${item.id}" class="nav-link text-left hover:text-[#f4d434] transition-colors ${activeSection === item.id ? 'text-[#f4d434] font-semibold' : ''} ${!isMobile ? 'md:text-left' : ''}">${item.label}</a>`).join('');
+      const renderSocialIcons = () => socialLinks.map(link => `<a href="${link.href}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#f4d434] transition-colors"><i class="${link.icon} text-xl"></i></a>`).join('');
+
+      const populateUI = () => {
+        document.getElementById('desktop-nav').innerHTML = renderNavItems();
+        document.getElementById('mobile-nav').innerHTML = renderNavItems(true);
+        document.getElementById('footer-nav').innerHTML = navItems.map(item => `<li><a href="#${item.id}" class="nav-link text-gray-400 hover:text-[#f4d434] transition-colors text-left">${item.label}</a></li>`).join('');
+        document.getElementById('desktop-social').innerHTML = renderSocialIcons();
+        document.getElementById('mobile-social').innerHTML = renderSocialIcons();
+        document.getElementById('footer-social').innerHTML = renderSocialIcons();
+        teamGrid.innerHTML = teamMembers.map((member, index) => `<div data-aos="fade-up" data-aos-delay="${index*100}" class="team-member-card bg-white rounded-xl shadow-lg overflow-hidden relative group hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"><div class="relative overflow-hidden"><img src="${teamImages[index]}" alt="${member.name}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" /><div class="overlay absolute inset-0 bg-gradient-to-t from-[#140c3c]/70 to-transparent flex items-end p-6"><div class="text-white"><p class="font-semibold">${member.title}</p><p class="text-sm opacity-90">${member.specialty}</p></div></div></div><div class="p-6 text-center"><h5 class="text-xl font-bold text-[#140c3c] mb-2">${member.name}</h5><p class="text-[#f4d434] font-semibold">${member.title}</p></div></div>`).join('');
+        servicesGrid.innerHTML = services.map((service, index) => `<div data-aos="fade-up" data-aos-delay="${index*100}" class="relative overflow-hidden rounded-xl shadow-lg group cursor-pointer h-96 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"><div class="absolute inset-0"><img src="${serviceImages[index]}" alt="${service.title}" class="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" /><div class="absolute inset-0 bg-gradient-to-t from-[#140c3c]/80 to-[#140c3c]/40"></div></div><div class="relative z-10 p-8 h-full flex flex-col justify-center items-center text-center"><div class="w-16 h-16 bg-[#f4d434] rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-white/20 group-hover:backdrop-blur-sm transition-all duration-300"><i class="${service.icon} text-white text-2xl group-hover:text-[#f4d434] transition-colors duration-300"></i></div><h4 class="text-xl font-bold text-white mb-4 group-hover:text-[#f4d434] transition-colors duration-300">${service.title}</h4><p class="text-white/90 leading-relaxed opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-full transition-all duration-300">${service.description}</p></div></div>`).join('');
+        document.getElementById('footer-services').innerHTML = services.slice(0, 5).map(service => `<li><span class="text-gray-400 text-left">${service.title}</span></li>`).join('');
+        document.getElementById('footer-copyright').innerText = `© ${new Date().getFullYear()} Todos los derechos reservados. Hospital Veterinario Santa Martha - Cuidando de tus mascotas con amor y profesionalismo.`;
+      };
+      
+      const toggleMenu = () => { isMenuOpen = !isMenuOpen; mobileMenu.classList.toggle('hidden'); menuOpenIcon.classList.toggle('hidden'); menuCloseIcon.classList.toggle('hidden'); };
+      const updateActiveNav = () => { const headerHeight = header.offsetHeight; let currentSectionId = 'inicio'; navItems.forEach(item => { const element = document.getElementById(item.id); if (element) { const rect = element.getBoundingClientRect(); if (rect.top <= headerHeight + 50 && rect.bottom >= headerHeight + 50) currentSectionId = item.id; } }); if (activeSection !== currentSectionId) { activeSection = currentSectionId; document.querySelectorAll('.nav-link').forEach(link => { link.classList.remove('text-[#f4d434]', 'font-semibold'); if (link.dataset.section === activeSection) link.classList.add('text-[#f4d434]', 'font-semibold'); }); } };
+      const changeHeroImage = () => { const newImageDiv = document.createElement('div'); newImageDiv.className = 'hero-bg-image absolute inset-0 bg-cover bg-center opacity-0'; newImageDiv.style.backgroundImage = `url(${heroImages[currentImageIndex]})`; heroBgContainer.appendChild(newImageDiv); setTimeout(() => { newImageDiv.style.opacity = 1; }, 100); if (heroBgContainer.children.length > 1) { setTimeout(() => { while (heroBgContainer.children.length > 1) heroBgContainer.removeChild(heroBgContainer.firstChild); }, 1500); } heroDotsContainer.innerHTML = heroImages.map((_, index) => `<button data-index="${index}" class="hero-dot w-3 h-3 rounded-full transition-all ${index===currentImageIndex ? 'bg-[#f4d434] w-6' : 'bg-white/50'}"></button>`).join(''); document.querySelectorAll('.hero-dot').forEach(dot => { dot.addEventListener('click', (e) => { const newIndex = parseInt(e.target.dataset.index); if (newIndex !== currentImageIndex) { currentImageIndex = newIndex; changeHeroImage(); clearInterval(heroInterval); heroInterval = setInterval(nextImage, 5000); } }); }); };
+      const nextImage = () => { currentImageIndex = (currentImageIndex + 1) % heroImages.length; changeHeroImage(); };
+      
+      menuButton.addEventListener('click', toggleMenu);
+      
+      document.querySelectorAll('a.nav-link').forEach(anchor => { anchor.addEventListener('click', function (e) { e.preventDefault(); const targetId = this.getAttribute('href'); const targetElement = document.querySelector(targetId); if (targetElement) { let headerOffset = document.getElementById('header').offsetHeight; if (targetId === '#inicio') headerOffset = 0; const elementPosition = targetElement.getBoundingClientRect().top; const offsetPosition = elementPosition + window.pageYOffset - headerOffset; window.scrollTo({ top: offsetPosition, behavior: "smooth" }); if(isMenuOpen) toggleMenu(); } }); });
+      
+      window.addEventListener('scroll', () => { if (window.scrollY > 400) { whatsappWidget.classList.add('visible'); } else { whatsappWidget.classList.remove('visible'); whatsappWidget.classList.remove('active'); } const footerTop = footer.getBoundingClientRect().top; if (footer && footerTop < window.innerHeight) { scrollToTopButton.classList.add('visible'); } else { scrollToTopButton.classList.remove('visible'); } });
+      whatsappButton.addEventListener('click', (e) => { e.stopPropagation(); whatsappWidget.classList.toggle('active'); });
+      document.addEventListener('click', (e) => { if (!whatsappWidget.contains(e.target)) whatsappWidget.classList.remove('active'); });
+
+      // --- FORM SUBMISSION TO GOOGLE SHEETS ---
+      const form = document.getElementById('contact-form');
+      const formStatus = document.getElementById('form-status');
+      const submitButton = document.getElementById('submit-button');
+      const scriptURL = 'PEGA_TU_URL_DEL_SCRIPT_AQUÍ'; 
+      
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        submitButton.disabled = true;
+        formStatus.textContent = 'Enviando...';
+        
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+          .then(response => {
+            if (response.ok) {
+              formStatus.textContent = '¡Mensaje enviado con éxito!';
+              formStatus.style.color = '#25D366'; // Green
+              form.reset();
+            } else {
+              throw new Error('Network response was not ok.');
+            }
+          })
+          .catch(error => {
+            console.error('Error!', error.message);
+            formStatus.textContent = 'Error al enviar. Intenta de nuevo.';
+            formStatus.style.color = '#ff4d4d'; // Red
+          })
+          .finally(() => {
+            submitButton.disabled = false;
+            setTimeout(() => {
+              formStatus.textContent = '';
+            }, 5000);
+          });
+      });
+
+      populateUI();
+      changeHeroImage();
+      heroInterval = setInterval(nextImage, 5000);
+      updateActiveNav(); 
+      window.addEventListener('scroll', updateActiveNav);
+    });
+  </script>
+
+</body>
+</html>
